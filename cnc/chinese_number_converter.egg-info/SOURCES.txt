@@ -1,0 +1,8 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+cnc/chinese_number_converter.egg-info/PKG-INFO
+cnc/chinese_number_converter.egg-info/SOURCES.txt
+cnc/chinese_number_converter.egg-info/dependency_links.txt
+cnc/chinese_number_converter.egg-info/top_level.txt
