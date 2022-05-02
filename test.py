@@ -1,4 +1,4 @@
-import cnc
+from cnc import convert
 
 chineseNumber = [
     ["零", "0"],
@@ -37,6 +37,8 @@ chineseNumber = [
 ]
 
 for s in chineseNumber:
-    r = cnc.chinese2number(s[0])
+    r = convert.chinese2number(s[0])
     if r != int(s[1]):
         print(s[0], "/", str(r))
+
+print(convert.chinese2number("五十七"))
