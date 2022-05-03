@@ -1,3 +1,5 @@
+import math
+
 ChineseNumber2Number = {
     "1": 1,
     "一": 1,
@@ -59,14 +61,68 @@ ChineseBigUnit2Number = {
     "極": 1e+48
 }
 
+ChineseUnit = [
+    "",
+    "十",
+    "百",
+    "千"
+]
+
+ChineseBigUnit = [
+    "",
+    "萬",
+    "億",
+    "兆",
+    "京",
+    "垓",
+    "秭",
+    "穰",
+    "溝",
+    "澗",
+    "正",
+    "載",
+    "極"
+]
+
+Number2Chinese = {
+    1: "一",
+    2: "二",
+    3: "三",
+    4: "四",
+    5: "五",
+    6: "六",
+    7: "七",
+    8: "八",
+    9: "九",
+    0: "零"
+}
+
+class ConvertError(Exception):
+    def __init__(self, what):
+        self.what = what
+    
+    def __str__(self):
+        return self.what
+
 def chinese2number(string):
     curDigit = 0
     curNum = 0
     num = 0
-    for c in string:
+    for i in range(len(string)):
+        c = string[i]
         if c in ChineseNumber2Number:
             curDigit *= 10
             curDigit += ChineseNumber2Number[c]
+
+            #for "一百一" is 110 (not 101) issue
+            if i == len(string)-1 and len(string) >= 2 and string[i-1] == "百":
+                curDigit *= 10
+            #for "一千一" is 1100 (not 1001) issue
+            if i == len(string)-1 and len(string) >= 2 and string[i-1] == "千":
+                curDigit *= 100
+            #for "一萬一" is 11000 (not 10001) issue
+            if i == len(string)-1 and len(string) >= 2 and string[i-1] == "萬":
+                curDigit *= 1000
         if c in ChineseUnit2Number:
             if curDigit == 0:
                 curNum += ChineseUnit2Number[c]
@@ -82,3 +138,50 @@ def chinese2number(string):
     curNum += curDigit
     num += curNum
     return num
+
+def number2chinese(number):
+    if number == 0:
+        return "零"
+    if number >= 1e+52:
+        raise ConvertError("Number is too large. Maximum is (1e+52)-1.")
+
+    string = ""
+    section = []
+    while number > 0:
+        section.append(number%10000)
+        number //= 10000
+    
+    previousZero = 0 #0 for not applicable, 1 for there is zero and should be print in the future, -1 for no zero
+
+    for i in reversed(range(len(section))):
+        digit = []
+        for j in range(4):
+            digit.append(section[i]%10)
+            section[i] //= 10
+        for j in reversed(range(4)):
+            if digit[j] != 0:
+                #for zero issue
+                if previousZero == 1:
+                    string += Number2Chinese[0]
+                    previousZero = -1
+                if previousZero == 0:
+                    previousZero = -1
+
+                #for "十" and "一十" issue
+                if not(j == 1 and digit[j] == 1 and digit[2] == 0 and digit[3] == 0):
+                    if (j == 2 or j == 3) and digit[j] == 2:
+                        string += "兩"
+                    elif j == 0 and i != 0 and digit[j] == 2 and digit[1] == 0 and digit[2] == 0 and digit[3] == 0:
+                        string += "兩"
+                    else:
+                        string += Number2Chinese[digit[j]]
+                
+                string += ChineseUnit[j]
+            elif digit[j] == 0:
+                if previousZero == -1:
+                    previousZero = 1
+        
+        if not(digit[0] == 0 and digit[1] == 0 and digit[2] == 0 and digit[3] == 0):
+            string += ChineseBigUnit[i]
+    
+    return string
