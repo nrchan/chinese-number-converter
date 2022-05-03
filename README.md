@@ -15,6 +15,8 @@ print(convert.number2chinese(57)) #五十七
 
 Returns the arabic number representation of given string.
 
+### Notes
+
 The function uses a loosely-matching logic, so the given string doesn't need to be confined to a specific pattern.
 
 ```python
@@ -23,6 +25,8 @@ print(convert.chinese2number("二零一二")) #will also be 2012
 print(convert.chinese2number("2012")) #will be, of course, 2012
 ```
 > That being said, please still avoid ambiguous and grammartically incorrect string such as ```一兆一``` or ```一百一千億```.
+
+### Support character
 
 Support following characters:
 - Normal number: 一...九、十、百、千
@@ -35,6 +39,8 @@ Support following characters:
 ## number2chinese(int) -> (string)
 
 Returns the chinese representation of given number.
+
+### Notes
 
 This function uses "萬進" logic when dealing with larger number (> 10<sup>8</sup>), which basically means that every 4 digits will be treated as a group.
 This is the most common logic to deal with large numbers, and can support up to 10<sup>52</sup>-1.
