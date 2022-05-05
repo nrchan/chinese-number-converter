@@ -5,7 +5,7 @@ This is a simple Chinese number converter that converts between [Chinese numbera
 ## 👍 Quickstart
 
 ```python
-from cnc import convert
+from chinese_number_converter.cnc import convert
 
 print(convert.chinese2number("五十七")) #57
 print(convert.number2chinese(57)) #五十七
