@@ -8,12 +8,14 @@ ChineseNumber2Number = {
     "二": 2,
     "貳": 2,
     "貮": 2,
+    "贰": 1,
     "兩": 2,
     "3": 3,
     "三": 3,
     "叁": 3,
     "參": 3,
     "叄": 3,
+    "参": 3,
     "4": 4,
     "四": 4,
     "肆": 4,
@@ -23,6 +25,7 @@ ChineseNumber2Number = {
     "6": 6,
     "六": 6,
     "陸": 6,
+    "陆": 6,
     "7": 7,
     "七": 7,
     "柒": 7,
@@ -48,17 +51,23 @@ ChineseUnit2Number = {
 
 ChineseBigUnit2Number = {
     "萬": 1e+4,
+    "万": 1e+4,
     "億": 1e+8,
+    "亿": 1e+8,
     "兆": 1e+12,
     "京": 1e+16,
     "垓": 1e+20,
     "秭": 1e+24,
     "穰": 1e+28,
     "溝": 1e+32,
+    "沟": 1e+32,
     "澗": 1e+36,
+    "涧": 1e+36,
     "正": 1e+40,
     "載": 1e+44,
-    "極": 1e+48
+    "载": 1e+44,
+    "極": 1e+48,
+    "极": 1e+48
 }
 
 ChineseUnit = [
@@ -66,6 +75,12 @@ ChineseUnit = [
     "十",
     "百",
     "千"
+]
+ChineseUnit_B = [
+    "",
+    "拾",
+    "佰",
+    "仟"
 ]
 
 ChineseBigUnit = [
@@ -83,6 +98,21 @@ ChineseBigUnit = [
     "載",
     "極"
 ]
+ChineseBigUnit_S = [
+    "",
+    "万",
+    "亿",
+    "兆",
+    "京",
+    "垓",
+    "秭",
+    "穰",
+    "沟",
+    "涧",
+    "正",
+    "载",
+    "极"
+]
 
 Number2Chinese = {
     1: "一",
@@ -94,6 +124,30 @@ Number2Chinese = {
     7: "七",
     8: "八",
     9: "九",
+    0: "零"
+}
+Number2Chinese_B = {
+    1: "壹",
+    2: "貳",
+    3: "參",
+    4: "肆",
+    5: "伍",
+    6: "陸",
+    7: "柒",
+    8: "捌",
+    9: "玖",
+    0: "零"
+}
+Number2Chinese_S_B = {
+    1: "壹",
+    2: "贰",
+    3: "叁",
+    4: "肆",
+    5: "伍",
+    6: "陆",
+    7: "柒",
+    8: "捌",
+    9: "玖",
     0: "零"
 }
 
@@ -139,9 +193,27 @@ def chinese2number(string):
     num += curNum
     return num
 
-def number2chinese(number):
+def number2chinese(number, language = "T", bigNumber = False):
+    #choose locale here
+    if language == "T" and bigNumber == False:
+        numberArray = Number2Chinese
+        unitArray = ChineseUnit
+        bigunitArray = ChineseBigUnit
+    elif language == "T" and bigNumber == True:
+        numberArray = Number2Chinese_B
+        unitArray = ChineseUnit_B
+        bigunitArray = ChineseBigUnit
+    elif language == "S" and bigNumber == False:
+        numberArray = Number2Chinese
+        unitArray = ChineseUnit
+        bigunitArray = ChineseBigUnit_S
+    elif language == "S" and bigNumber == True:
+        numberArray = Number2Chinese_S_B
+        unitArray = ChineseUnit_B
+        bigunitArray = ChineseBigUnit_S
+
     if number == 0:
-        return "零"
+        return numberArray[0]
     if number >= 1e+52:
         raise ConvertError("Number is too large. Maximum is (1e+52)-1.")
 
@@ -153,6 +225,8 @@ def number2chinese(number):
     
     previousZero = 0 #0 for not applicable, 1 for there is zero and should be print in the future, -1 for no zero
 
+    prevDigit = [-1,-1,-1,-1]
+
     for i in reversed(range(len(section))):
         digit = []
         for j in range(4):
@@ -162,7 +236,8 @@ def number2chinese(number):
             if digit[j] != 0:
                 #for zero issue
                 if previousZero == 1:
-                    string += Number2Chinese[0]
+                    if i == len(section)-1 or (i != len(section)-1 and (prevDigit[0] != 0 or j != 3)):
+                        string += numberArray[0]
                     previousZero = -1
                 if previousZero == 0:
                     previousZero = -1
@@ -170,18 +245,26 @@ def number2chinese(number):
                 #for "十" and "一十" issue
                 if not(j == 1 and digit[j] == 1 and digit[2] == 0 and digit[3] == 0):
                     if (j == 2 or j == 3) and digit[j] == 2:
-                        string += "兩"
+                        if language == "T":
+                            string += "兩"
+                        elif language == "S":
+                            string += "二"
                     elif j == 0 and i != 0 and digit[j] == 2 and digit[1] == 0 and digit[2] == 0 and digit[3] == 0:
-                        string += "兩"
+                        if language == "T":
+                            string += "兩"
+                        elif language == "S":
+                            string += "二"
                     else:
-                        string += Number2Chinese[digit[j]]
+                        string += numberArray[digit[j]]
                 
-                string += ChineseUnit[j]
+                string += unitArray[j]
             elif digit[j] == 0:
                 if previousZero == -1:
                     previousZero = 1
         
         if not(digit[0] == 0 and digit[1] == 0 and digit[2] == 0 and digit[3] == 0):
-            string += ChineseBigUnit[i]
+            string += bigunitArray[i]
+
+        prevDigit = digit
     
     return string

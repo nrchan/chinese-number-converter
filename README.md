@@ -2,7 +2,7 @@
 
 This is a simple Chinese number converter that converts between [Chinese numberals](https://en.wikipedia.org/wiki/Chinese_numerals) and [arabic numbers](https://en.wikipedia.org/wiki/Arabic_numerals).
 
-## Quickstart
+## 👍Quickstart
 
 ```python
 from cnc import convert
@@ -11,7 +11,7 @@ print(convert.chinese2number("五十七")) #57
 print(convert.number2chinese(57)) #五十七
 ```
 
-## chinese2number(string) -> (float|int)
+## 👉chinese2number(string) -> (float|int)
 
 Returns the arabic number representation of given string.
 
@@ -29,16 +29,22 @@ print(convert.chinese2number("2012")) #will be, of course, 2012
 ### Support character
 
 Support following characters:
-- Normal number: 一...九、十、百、千
-- Large number till 10<sup>52</sup>-1: 萬、億...極
-- Zero: 零、〇
-- Captial version of all characters above: 壹...玖、拾、佰、仟
-- Arabic number: 1...9、0
+- **Normal number**: 一...九、十、百、千
+- **Large number** till 10<sup>52</sup>-1: 萬、億...極
+- **Zero**: 零、〇
+- **Captial version** of all characters above: 壹...玖、拾、佰、仟
+- **Arabic number**: 1...9、0
+- **Simplified version** off all characters above: 贰、万...
 > Arabic numbers were also supported because they will sometimes be mixed with characters, like "1億5000萬".
 
-## number2chinese(int) -> (string)
+## 👉number2chinese(int) -> (string)
 
 Returns the chinese representation of given number.
+
+### Arguments
+
+- **language**: "**T**" or "**S**". Choose between Traditional and Simplified characters. (default is "T")
+- **bigNumber**: bool, **True** or **False**. Output capital version of charaters. (default is False) 
 
 ### Notes
 
