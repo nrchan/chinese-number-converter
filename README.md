@@ -43,15 +43,23 @@ Returns the chinese representation of given number.
 
 ### Arguments
 
-- **language**: string, "**T**" or "**S**". Choose between Traditional and Simplified characters. (default is "T")
-- **bigNumber**: bool, **True** or **False**. Output capital version of charaters. (default is False)
+- **language**: string, "**T**" or "**S**".
+    - Choose between Traditional and Simplified characters.
+    - (default is "T")
+- **bigNumber**: bool, **True** or **False**.
+    - Output capital version of charaters.
+    - (default is False)
 
 ```python
 print(convert.number2chinese(202)) #兩百零二
 print(convert.number2chinese(202, language = "S", bigNumber = True)) #贰佰零贰
 ```
 
-- **forceErLian**: string, **auto**, **force** or **forceNot**. Whether to distinguish Er(二) and Lian(两). When set to "auto", the output will follow regional convention. When set to "force", both Traditional and Simplified version will distinguish word usage, while "forceNot" will always output Er(二) for number "two". (default is "auto")
+- **forceErLian**: string, "**auto**", "**force**" or "**forceNot**".
+    - Whether to distinguish Er(二) and Lian(两).
+    - 1. When set to "auto", the output will follow regional convention. 
+      2. When set to "force", both Traditional and Simplified version will distinguish word usage.
+      3. When set to "forceNot", it will always output Er(二) for number "two". (default is "auto")
 > This will only effect when not using capital number (bigNumber = False). Using capital number will always output 貳/贰.
 
 ```python
