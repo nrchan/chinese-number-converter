@@ -56,10 +56,11 @@ print(convert.number2chinese(202, language = "S", bigNumber = True)) #贰佰零�
 ```
 
 - **forceErLian**: string, "**auto**", "**force**" or "**forceNot**".
-    - Whether to distinguish Er(二) and Lian(两).
+    - Whether to distinguish Er(二) and Lian(兩).
     - 1. When set to "auto", the output will follow regional convention. 
       2. When set to "force", both Traditional and Simplified version will distinguish word usage.
-      3. When set to "forceNot", it will always output Er(二) for number "two". (default is "auto")
+      3. When set to "forceNot", it will always output Er(二) for number "two".
+    - (default is "auto")
 > This will only effect when not using capital number (bigNumber = False). Using capital number will always output 貳/贰.
 
 ```python
