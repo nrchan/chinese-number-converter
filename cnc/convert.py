@@ -193,24 +193,34 @@ def chinese2number(string):
     num += curNum
     return num
 
-def number2chinese(number, language = "T", bigNumber = False):
+def number2chinese(number, language = "T", bigNumber = False, forceErLian = "auto"):
     #choose locale here
     if language == "T" and bigNumber == False:
         numberArray = Number2Chinese
         unitArray = ChineseUnit
         bigunitArray = ChineseBigUnit
+        if forceErLian == "forceNot":
+            erlian = "二"
+        else:
+            erlian = "兩"
     elif language == "T" and bigNumber == True:
         numberArray = Number2Chinese_B
         unitArray = ChineseUnit_B
         bigunitArray = ChineseBigUnit
+        erlian = "貳"
     elif language == "S" and bigNumber == False:
         numberArray = Number2Chinese
         unitArray = ChineseUnit
         bigunitArray = ChineseBigUnit_S
+        if forceErLian == "force":
+            erlian = "两"
+        else:
+            erlian = "二"
     elif language == "S" and bigNumber == True:
         numberArray = Number2Chinese_S_B
         unitArray = ChineseUnit_B
         bigunitArray = ChineseBigUnit_S
+        erlian = "贰"
 
     if number == 0:
         return numberArray[0]
@@ -245,15 +255,9 @@ def number2chinese(number, language = "T", bigNumber = False):
                 #for "十" and "一十" issue
                 if not(j == 1 and digit[j] == 1 and digit[2] == 0 and digit[3] == 0):
                     if (j == 2 or j == 3) and digit[j] == 2:
-                        if language == "T":
-                            string += "兩"
-                        elif language == "S":
-                            string += "二"
+                        string += erlian
                     elif j == 0 and i != 0 and digit[j] == 2 and digit[1] == 0 and digit[2] == 0 and digit[3] == 0:
-                        if language == "T":
-                            string += "兩"
-                        elif language == "S":
-                            string += "二"
+                        string += erlian
                     else:
                         string += numberArray[digit[j]]
                 

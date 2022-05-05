@@ -2,7 +2,7 @@
 
 This is a simple Chinese number converter that converts between [Chinese numberals](https://en.wikipedia.org/wiki/Chinese_numerals) and [arabic numbers](https://en.wikipedia.org/wiki/Arabic_numerals).
 
-## 👍Quickstart
+## 👍 Quickstart
 
 ```python
 from cnc import convert
@@ -11,7 +11,7 @@ print(convert.chinese2number("五十七")) #57
 print(convert.number2chinese(57)) #五十七
 ```
 
-## 👉chinese2number(string) -> (float|int)
+## 👉 chinese2number(string) -> (float|int)
 
 Returns the arabic number representation of given string.
 
@@ -37,14 +37,29 @@ Support following characters:
 - **Simplified version** off all characters above: 贰、万...
 > Arabic numbers were also supported because they will sometimes be mixed with characters, like "1億5000萬".
 
-## 👉number2chinese(int) -> (string)
+## 👉 number2chinese(int) -> (string)
 
 Returns the chinese representation of given number.
 
 ### Arguments
 
-- **language**: "**T**" or "**S**". Choose between Traditional and Simplified characters. (default is "T")
-- **bigNumber**: bool, **True** or **False**. Output capital version of charaters. (default is False) 
+- **language**: string, "**T**" or "**S**". Choose between Traditional and Simplified characters. (default is "T")
+- **bigNumber**: bool, **True** or **False**. Output capital version of charaters. (default is False)
+
+```python
+print(convert.number2chinese(202)) #兩百零二
+print(convert.number2chinese(202, language = "S", bigNumber = True)) #贰佰零贰
+```
+
+- **forceErLian**: string, **auto**, **force** or **forceNot**. Whether to distinguish Er(二) and Lian(两). When set to "auto", the output will follow regional convention. When set to "force", both Traditional and Simplified version will distinguish word usage, while "forceNot" will always output Er(二) for number "two". (default is "auto")
+> This will only effect when not using capital number (bigNumber = False). Using capital number will always output 貳/贰.
+
+```python
+print(convert.number2chinese(202, language = "T")) #兩百零二
+print(convert.number2chinese(202, language = "T", forceErLian = "forceNot")) #二百零二
+print(convert.number2chinese(202, language = "S")) #二百零二
+print(convert.number2chinese(202, language = "S", forceErLian = "force")) #两百零二
+```
 
 ### Notes
 
