@@ -1,6 +1,6 @@
 # chinese-number-convertor
 
-This is a simple Chinese number converter that converts between [Chinese numberals](https://en.wikipedia.org/wiki/Chinese_numerals) and [arabic numbers](https://en.wikipedia.org/wiki/Arabic_numerals).
+This is a simple Chinese number converter that converts between [Chinese numerals](https://en.wikipedia.org/wiki/Chinese_numerals) and [arabic numbers](https://en.wikipedia.org/wiki/Arabic_numerals).
 
 ## 👍 Quickstart
 
@@ -32,7 +32,7 @@ Support following characters:
 - **Normal number**: 一...九、十、百、千
 - **Large number** till 10<sup>52</sup>-1: 萬、億...極
 - **Zero**: 零、〇
-- **Captial version** of all characters above: 壹...玖、拾、佰、仟
+- **Capital version** of all characters above: 壹...玖、拾、佰、仟
 - **Arabic number**: 1...9、0
 - **Simplified version** off all characters above: 贰、万...
 > Arabic numbers were also supported because they will sometimes be mixed with characters, like "1億5000萬".
@@ -47,7 +47,7 @@ Returns the chinese representation of given number.
     - Choose between Traditional and Simplified characters.
     - (default is "T")
 - **bigNumber**: bool, **True** or **False**.
-    - Output capital version of charaters.
+    - Output capital version of characters.
     - (default is False)
 
 ```python
