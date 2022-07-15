@@ -38,7 +38,7 @@ Support following characters:
 - **Normal number**: 一...九、十、百、千
 - **Large number** till 10<sup>52</sup>-1: 萬、億...極
 - **Zero**: 零、〇
-- **Captial version** of all characters above: 壹...玖、拾、佰、仟
+- **Capital version** of all characters above: 壹...玖、拾、佰、仟
 - **Arabic number**: 1...9、0
 - **Simplified version** off all characters above: 贰、万...
 
