@@ -1,7 +1,7 @@
 # chinese-number-convertor
 
 This is a simple Chinese number converter that converts between
-[Chinese numberals](https://en.wikipedia.org/wiki/Chinese_numerals) and
+[Chinese numbers](https://en.wikipedia.org/wiki/Chinese_numerals) and
 [Arabic numbers](https://en.wikipedia.org/wiki/Arabic_numerals).
 
 ## 👍 Quickstart
