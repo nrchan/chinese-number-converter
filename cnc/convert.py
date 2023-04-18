@@ -40,6 +40,22 @@ ChineseNumber2Number = {
     "〇": 0
 }   
 
+ChineseCombinedNumber2ChineseNumber = {
+    "廿": "二十",
+    "念": "二十",
+    "卅": "三十",
+    "卌": "四十",
+    "圩": "五十",
+    "圓": "六十",
+    "圆": "六十",
+    "進": "七十",
+    "进": "七十",
+    "枯": "八十",
+    "樺": "九十",
+    "桦": "九十",
+    "皕": "兩百",
+}
+
 ChineseUnit2Number = {
     "十": 10,
     "拾": 10,
@@ -76,6 +92,7 @@ ChineseUnit = [
     "百",
     "千"
 ]
+
 ChineseUnit_B = [
     "",
     "拾",
@@ -159,6 +176,10 @@ class ConvertError(Exception):
         return self.what
 
 def chinese2number(string):
+    #for 廿 and other combined number
+    for combined, normal in ChineseCombinedNumber2ChineseNumber.items():
+        string = string.replace(combined, normal)
+    
     curDigit = 0
     curNum = 0
     num = 0
@@ -169,13 +190,13 @@ def chinese2number(string):
             curDigit += ChineseNumber2Number[c]
 
             #for "一百一" is 110 (not 101) issue
-            if i == len(string)-1 and len(string) >= 2 and string[i-1] == "百":
+            if i == len(string)-1 and len(string) >= 2 and (string[i-1] == "百" or string[i-1] == "佰"):
                 curDigit *= 10
             #for "一千一" is 1100 (not 1001) issue
-            if i == len(string)-1 and len(string) >= 2 and string[i-1] == "千":
+            if i == len(string)-1 and len(string) >= 2 and (string[i-1] == "千" or string[i-1] == "仟"):
                 curDigit *= 100
             #for "一萬一" is 11000 (not 10001) issue
-            if i == len(string)-1 and len(string) >= 2 and string[i-1] == "萬":
+            if i == len(string)-1 and len(string) >= 2 and (string[i-1] == "萬" or string[i-1] == "万"):
                 curDigit *= 1000
         if c in ChineseUnit2Number:
             if curDigit == 0:
